@@ -21,6 +21,7 @@ cncserver.app.use(slashes());
 
 // Setup the cental server object.
 cncserver.server = require('http').createServer(cncserver.app);
+cncserver.exports.app = cncserver.app;
 cncserver.exports.server = cncserver.server;
 cncserver.srv = {}; // Hold custom functions/wrappers.
 
