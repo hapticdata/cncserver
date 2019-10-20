@@ -7,19 +7,22 @@
 
 module.exports = function(cncserver) {
   var express = require('express'); // Express Webserver Requires
+  var bodyParser = require('body-parser');
   var slashes = require('connect-slashes'); // Middleware to manage URI slashes
   cncserver.app = express(); // Create router (app).
 
-  // Setup the cental server object.
-  cncserver.server = require('http').createServer(cncserver.app);
-  cncserver.srv = {}; // Hold custom functions/wrappers.
-
   // Global express initialization (must run before any endpoint creation)
-  cncserver.app.configure(function() {
-    cncserver.app.use("/", express.static(__dirname + '/../example'));
-    cncserver.app.use(express.bodyParser());
-    cncserver.app.use(slashes());
-  });
+cncserver.app.use("/", express.static(__dirname + '/../example'));
+cncserver.app.use(bodyParser.json());
+cncserver.app.use(bodyParser.urlencoded({
+    extended: true
+}));
+cncserver.app.use(slashes());
+
+// Setup the cental server object.
+cncserver.server = require('http').createServer(cncserver.app);
+cncserver.srv = {}; // Hold custom functions/wrappers.
+
 
   // Start express HTTP server for API on the given port
   var serverStarted = false;
