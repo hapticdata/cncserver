@@ -8,7 +8,7 @@
 module.exports = function(cncserver) {
   var express = require('express'); // Express Webserver Requires
   var bodyParser = require('body-parser');
-  var slashes = require('connect-slashes'); // Middleware to manage URI slashes
+//   var slashes = require('connect-slashes'); // Middleware to manage URI slashes
   cncserver.app = express(); // Create router (app).
 
   // Global express initialization (must run before any endpoint creation)
@@ -17,7 +17,7 @@ cncserver.app.use(bodyParser.json());
 cncserver.app.use(bodyParser.urlencoded({
     extended: true
 }));
-cncserver.app.use(slashes());
+//cncserver.app.use(slashes());
 
 // Setup the cental server object.
 cncserver.server = require('http').createServer(cncserver.app);
@@ -50,6 +50,8 @@ cncserver.srv = {}; // Hold custom functions/wrappers.
       }
     });
 
+    console.log('has parent: ', module.parent);
+    console.log(Array.from(process.argv));
     cncserver.server.listen(
       cncserver.gConf.get('httpPort'),
       hostname,
